@@ -14,7 +14,6 @@ function inputData(){
     if (existingData) {
         existingData = JSON.parse(existingData);
         Object.entries(existingData).forEach(([name, value]) => {
-            console.log(name, value)
             feedbackFormState[name] = value;
             form.elements[name].value = value;
         })
