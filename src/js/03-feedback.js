@@ -4,9 +4,22 @@ const form = document.querySelector('form');
 const email = document.querySelector('input');
 const message = document.querySelector('textArea');
 
-let feedbackFormState = {};
-console.log(form);
+let feedbackFormState = {
+    email: '',
+    message: '',
+};
 
+function inputData(){
+    let existingData = localStorage.getItem('feedback-form-state');
+    if (existingData) {
+        existingData = JSON.parse(existingData);
+        Object.entries(existingData).forEach(([name, value]) => {
+            console.log(name, value)
+            feedbackFormState[name] = value;
+            form.elements[name].value = value;
+        })
+    };
+}
 inputData();
 
 const formInput = (event) => {
@@ -26,15 +39,3 @@ const handleSubmit = (event) => {
 
 form.addEventListener('input', throttle((formInput), 500));
 form.addEventListener('submit', handleSubmit);
-
-function inputData(){
-    let existingData = localStorage.getItem('feedback-form-state');
-    console.log(existingData);
-    if (existingData) {
-        existingData = JSON.parse(existingData);
-        Object.entries(existingData).forEach(([name, value]) => {
-            feedbackFormState[name] = value;
-            form.elements[name].value = value;
-        })
-    } else { email.value = "", message.value = ""; };
-}
